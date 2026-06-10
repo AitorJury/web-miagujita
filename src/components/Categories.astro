@@ -1,0 +1,73 @@
+---
+// Definimos la estructura de datos (el "Modelo") para las categorías
+const categories = [
+  {
+    title: "Costura Creativa",
+    description:
+      "Piezas únicas con alma: neceseres, estuches, riñoneras y bolsas totalmente personalizables en tamaño, telas y bordados.",
+    tag: "100% Personalizable",
+    icon: "🧵",
+  },
+  {
+    title: "Arreglos y Composturas",
+    description:
+      "Especialista en adaptar tu ropa para que te quede perfecta. Bajos a mano/máquina, cambio de cremalleras, entallar faldas y vestidos.",
+    tag: "Servicio Local",
+    icon: "🪡",
+  },
+  {
+    title: "Textil Hogar",
+    description:
+      "Confección a medida para vestir tu casa. Cortinas, delantales de cocina, paños, individuales y aplicaciones de patchwork.",
+    tag: "A medida",
+    icon: "🏠",
+  },
+];
+---
+
+<section id="servicios" class="max-w-7xl mx-auto px-6 py-20 bg-transparent">
+  <div class="text-center max-w-3xl mx-auto mb-16 space-y-4">
+    <h2 class="font-serif text-4xl lg:text-5xl text-agujita-text">
+      ¿Qué vas a encontrar en <span class="text-agujita-primary italic"
+        >Mi Agujita</span
+      >?
+    </h2>
+    <div class="w-12 h-[2px] bg-agujita-primary mx-auto my-4"></div>
+    <p class="font-sans text-agujita-text/70 text-lg">
+      Artesanía textil que combina la tradición de los arreglos de siempre con
+      la creatividad de complementos únicos.
+    </p>
+  </div>
+
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+    {
+      categories.map((item) => (
+        <div class="bg-white p-8 rounded-2xl border border-agujita-primary/10 shadow-sm hover:shadow-md transition-all duration-300 flex flex-col justify-between group hover:-translate-y-1">
+          <div class="space-y-6">
+            <div class="flex items-center justify-between">
+              <span class="text-4xl">{item.icon}</span>
+              <span class="text-xs uppercase tracking-wider font-semibold text-agujita-primary bg-agujita-primary/10 px-3 py-1 rounded-full">
+                {item.tag}
+              </span>
+            </div>
+
+            <div class="space-y-2">
+              <h3 class="font-serif text-2xl text-agujita-text group-hover:text-agujita-primary transition-colors">
+                {item.title}
+              </h3>
+              <p class="font-sans text-sm text-agujita-text/80 leading-relaxed">
+                {item.description}
+              </p>
+            </div>
+          </div>
+
+          <div class="pt-6 border-t border-dashed border-stone-100 mt-6">
+            <span class="text-xs uppercase tracking-widest font-bold text-agujita-text group-hover:text-agujita-primary transition-colors flex items-center gap-2">
+              Consultar opciones ➔
+            </span>
+          </div>
+        </div>
+      ))
+    }
+  </div>
+</section>
