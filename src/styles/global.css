@@ -6,6 +6,9 @@
     --color-agujita-text: #374151;
     --color-agujita-primary: #c87c8c;
     --color-agujita-accent: #dc2626;
+    --color-agujita-surface: #ffffff;
+    --color-agujita-muted: #d6d3d1;
+
 
     /* Tipografías */
     --font-serif: "Playfair Display", serif;
