@@ -1,13 +1,22 @@
 ---
-import Layout from '../layouts/Layout.astro';
+import Layout from "../layouts/Layout.astro";
+import Header from "../components/Header.astro";
 ---
 
-<Layout title="Mi Agujita | Inicio">
-	<div class="p-10 text-center">
-		<h1 class="font-serif text-5xl text-agujita-primary mb-4">Mi Agujita</h1>
-		<p class="font-sans text-lg text-agujita-text">Prueba de texto base</p>
-		<button class="mt-8 px-6 py-3 bg-agujita-primary text-white rounded-full font-medium shadow-md cursor-pointer hover:opacity-90">
-			Botón de prueba
-		</button>
-	</div>
+<Layout title="Mi Agujita | Costura Creativa">
+  <Header />
+
+  <div class="p-10 text-center mt-20">
+    <h1 class="font-serif text-5xl text-agujita-primary mb-4">
+      La base está lista
+    </h1>
+    <p class="font-sans text-lg text-agujita-text">
+      Probando la integración del Header en el layout principal.
+    </p>
+  </div>
+
+  <div
+    class="h-[2000px] w-full bg-gradient-to-b from-transparent to-agujita-primary/5 mt-10"
+  >
+  </div>
 </Layout>
