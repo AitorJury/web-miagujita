@@ -1,1 +1,24 @@
 @import "tailwindcss";
+
+@theme {
+    /* Nuestras constantes de color */
+    --color-agujita-bg: #fdf8f9;
+    --color-agujita-text: #374151;
+    --color-agujita-primary: #c87c8c;
+    --color-agujita-accent: #dc2626;
+
+    /* Tipografías */
+    --font-serif: "Playfair Display", serif;
+    --font-sans: "Inter", sans-serif;
+}
+
+@layer base {
+    body {
+        background-color: var(--color-agujita-bg);
+        color: var(--color-agujita-text);
+        font-family: var(--font-sans);
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        line-height: 1.625;
+    }
+}
