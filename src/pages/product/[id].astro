@@ -1,0 +1,76 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import { products } from '../../data/products.js';
+
+export function getStaticPaths() {
+  return products.map(product => ({
+    params: { id: product.id },
+    props: { product },
+  }));
+}
+
+const { product } = Astro.props;
+
+const numeroWhatsApp = "34610854434";
+const mensajeBase = `¡Hola Gladys! Vengo de tu web y me interesa: ${product.title}. ¿Me puedes dar más información?`;
+const urlWhatsApp = `https://wa.me/${numeroWhatsApp}?text=${encodeURIComponent(mensajeBase)}`;
+---
+
+<Layout title={`${product.title} | Mi Agujita`}>
+  <Header />
+
+  <main class="max-w-7xl mx-auto px-6 py-12 md:py-24 flex-grow">
+    
+    <a href="/#galeria" class="inline-flex items-center gap-2 text-agujita-text/60 hover:text-agujita-primary transition-colors mb-12 font-medium">
+      <span class="text-xl">←</span> Volver a la galería
+    </a>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-12 lg:gap-20 items-center">
+      
+      <div class="rounded-3xl overflow-hidden shadow-2xl border border-agujita-primary/10 aspect-[4/5]">
+        <img 
+          src={product.image} 
+          alt={product.title} 
+          class="w-full h-full object-cover"
+        />
+      </div>
+
+      <div class="space-y-8">
+        <span class="text-xs font-bold uppercase tracking-widest text-agujita-primary bg-agujita-primary/10 px-4 py-2 rounded-full inline-block">
+          Costura Creativa & Arreglos
+        </span>
+        
+        <h1 class="font-serif text-4xl md:text-5xl lg:text-6xl text-agujita-text leading-tight">
+          {product.title}
+        </h1>
+        
+        <div class="w-16 h-[2px] bg-agujita-primary/30"></div>
+        
+        <p class="font-sans text-lg text-agujita-text/80 leading-relaxed">
+          {product.description}
+        </p>
+
+        <div class="pt-8 flex flex-col sm:flex-row gap-4">
+          <a 
+            href={urlWhatsApp} 
+            target="_blank" 
+            rel="noopener noreferrer"
+            class="px-8 py-4 bg-agujita-text text-white rounded-full font-medium hover:bg-agujita-primary transition-colors shadow-lg text-center flex items-center justify-center gap-2"
+          >
+            <span>Preguntar por este trabajo</span>
+            <span class="text-xl">💬</span>
+          </a>
+        </div>
+
+        <p class="text-sm text-agujita-text/50 italic mt-4">
+          * Al hacer clic se abrirá WhatsApp con un mensaje pre-escrito para facilitarte la consulta.
+        </p>
+      </div>
+
+    </div>
+  </main>
+
+  <Footer />
+</Layout>

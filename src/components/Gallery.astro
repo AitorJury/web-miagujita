@@ -1,36 +1,5 @@
 ---
-const items = [
-  {
-    id: 1,
-    title: "Bolso personalizado",
-    image: "/img/galeria1.jpg",
-    class: "aspect-square",
-  },
-  {
-    id: 2,
-    title: "Arreglo de falda",
-    image: "/img/galeria2.jpg",
-    class: "aspect-[4/3] md:col-span-2",
-  },
-  {
-    id: 3,
-    title: "Cortinas a medida",
-    image: "/img/galeria3.jpg",
-    class: "aspect-square",
-  },
-  {
-    id: 4,
-    title: "Bordado a mano",
-    image: "/img/galeria4.jpg",
-    class: "aspect-square md:col-span-2",
-  },
-  {
-    id: 5,
-    title: "Bolsa de tela",
-    image: "/img/galeria5.jpg",
-    class: "aspect-[4/3]",
-  },
-];
+import { products } from "../data/products.js";
 ---
 
 <section id="galeria" class="max-w-7xl mx-auto px-6 py-20">
@@ -45,9 +14,10 @@ const items = [
 
   <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
     {
-      items.map((item) => (
-        <div
-          class={`group relative rounded-2xl overflow-hidden cursor-pointer shadow-sm border border-agujita-primary/10 ${item.class}`}
+      products.map((item) => (
+        <a
+          href={`/producto/${item.id}`}
+          class={`group relative rounded-2xl overflow-hidden cursor-pointer shadow-sm border border-agujita-primary/10 block ${item.class}`}
         >
           <img
             src={item.image}
@@ -60,7 +30,7 @@ const items = [
               {item.title}
             </span>
           </div>
-        </div>
+        </a>
       ))
     }
   </div>
