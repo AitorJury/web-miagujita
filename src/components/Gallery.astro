@@ -1,10 +1,35 @@
 ---
 const items = [
-  { id: 1, title: "Neceser personalizado", class: "aspect-square" },
-  { id: 2, title: "Arreglo de vestido", class: "aspect-[4/3] md:col-span-2" },
-  { id: 3, title: "Bolsa de tela (Tote bag)", class: "aspect-square" },
-  { id: 4, title: "Cortinas a medida", class: "aspect-square md:col-span-2" },
-  { id: 5, title: "Bordado a mano", class: "aspect-[4/3]" },
+  {
+    id: 1,
+    title: "Neceser personalizado",
+    image: "/img/galeria1.jpg",
+    class: "aspect-square",
+  },
+  {
+    id: 2,
+    title: "Arreglo de vestido",
+    image: "/img/galeria2.jpg",
+    class: "aspect-[4/3] md:col-span-2",
+  },
+  {
+    id: 3,
+    title: "Bolsa de tela",
+    image: "/img/galeria3.jpg",
+    class: "aspect-square",
+  },
+  {
+    id: 4,
+    title: "Cortinas a medida",
+    image: "/img/galeria4.jpg",
+    class: "aspect-square md:col-span-2",
+  },
+  {
+    id: 5,
+    title: "Bordado a mano",
+    image: "/img/galeria5.jpg",
+    class: "aspect-[4/3]",
+  },
 ];
 ---
 
@@ -13,17 +38,30 @@ const items = [
     <h2 class="font-serif text-4xl lg:text-5xl text-agujita-text">
       Algunos de mis <span class="text-agujita-primary italic">trabajos</span>
     </h2>
-    <p class="font-sans text-agujita-text/70 text-lg">Inspiración directa desde el taller</p>
+    <p class="font-sans text-agujita-text/70 text-lg">
+      Inspiración directa desde el taller
+    </p>
   </div>
-  
+
   <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-    {items.map(item => (
-      <div class={`bg-agujita-primary/5 rounded-2xl flex items-center justify-center p-6 text-center border border-agujita-primary/10 hover:bg-agujita-primary/10 hover:scale-[1.02] transition-all duration-300 cursor-pointer shadow-sm ${item.class}`}>
-        <span class="font-sans text-sm text-agujita-text/60 font-medium">
-          {item.title} <br/> 
-          <span class="text-xs opacity-50">(Espacio para foto)</span>
-        </span>
-      </div>
-    ))}
+    {
+      items.map((item) => (
+        <div
+          class={`group relative rounded-2xl overflow-hidden cursor-pointer shadow-sm border border-agujita-primary/10 ${item.class}`}
+        >
+          <img
+            src={item.image}
+            alt={item.title}
+            class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+          />
+
+          <div class="absolute inset-0 bg-agujita-text/70 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-4">
+            <span class="font-serif text-2xl text-white font-medium text-center">
+              {item.title}
+            </span>
+          </div>
+        </div>
+      ))
+    }
   </div>
 </section>
