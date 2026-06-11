@@ -7,6 +7,7 @@ const categories = [
       "Piezas únicas con alma: neceseres, estuches, riñoneras y bolsas totalmente personalizables en tamaño, telas y bordados.",
     tag: "100% Personalizable",
     icon: "🧵",
+    link: "#galeria",
   },
   {
     title: "Arreglos y Composturas",
@@ -14,6 +15,7 @@ const categories = [
       "Especialista en adaptar tu ropa para que te quede perfecta. Bajos a mano/máquina, cambio de cremalleras, entallar faldas y vestidos.",
     tag: "Servicio Local",
     icon: "🪡",
+    link: "#galeria",
   },
   {
     title: "Textil Hogar",
@@ -21,6 +23,7 @@ const categories = [
       "Confección a medida para vestir tu casa. Cortinas, delantales de cocina, paños, individuales y aplicaciones de patchwork.",
     tag: "A medida",
     icon: "🏠",
+    link: "#galeria",
   },
 ];
 ---
@@ -42,7 +45,10 @@ const categories = [
   <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
     {
       categories.map((item) => (
-        <div class="bg-white p-8 rounded-2xl border border-agujita-primary/10 shadow-sm hover:shadow-md transition-all duration-300 flex flex-col justify-between group hover:-translate-y-1">
+        <a
+          href={item.link}
+          class="block bg-white p-8 rounded-2xl border border-agujita-primary/10 shadow-sm hover:shadow-md transition-all duration-300 flex flex-col justify-between group hover:-translate-y-1"
+        >
           <div class="space-y-6">
             <div class="flex items-center justify-between">
               <span class="text-4xl">{item.icon}</span>
@@ -66,7 +72,7 @@ const categories = [
               Consultar opciones ➔
             </span>
           </div>
-        </div>
+        </a>
       ))
     }
   </div>
