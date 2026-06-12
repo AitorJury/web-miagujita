@@ -1,5 +1,6 @@
 ---
 import { products } from "../data/products.js";
+import { Image } from "astro:assets";
 ---
 
 <section id="galeria" class="max-w-7xl mx-auto px-6 py-20">
@@ -17,17 +18,21 @@ import { products } from "../data/products.js";
       products.map((item) => (
         <a
           href={`/producto/${item.id}`}
-          class={`group relative rounded-2xl overflow-hidden cursor-pointer shadow-sm border border-agujita-primary/10 block ${item.class}`}
+          class={`group relative rounded-2xl overflow-hidden shadow-sm border border-agujita-primary/10 block ${item.class}`}
         >
-          <img
+          <Image
             src={item.image}
             alt={item.title}
-            class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+            transition:name={`img-${item.id}`}
+            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
           />
 
-          <div class="absolute inset-0 bg-agujita-text/70 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-4">
-            <span class="font-serif text-2xl text-white font-medium text-center">
+          <div class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-agujita-text/90 via-agujita-text/40 to-transparent p-5 flex flex-col justify-end h-1/2">
+            <h3 class="font-serif text-xl md:text-2xl text-white font-medium drop-shadow-md">
               {item.title}
+            </h3>
+            <span class="text-xs font-bold text-white/90 uppercase tracking-widest mt-2 flex items-center gap-1 group-hover:text-agujita-primary transition-colors duration-300">
+              Ver detalles <span class="text-lg leading-none">→</span>
             </span>
           </div>
         </a>

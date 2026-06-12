@@ -1,5 +1,6 @@
 ---
-
+import { Image } from "astro:assets";
+import heroImage from "../assets/img/hero.jpg";
 ---
 
 <section
@@ -40,8 +41,8 @@
     <div
       class="aspect-[4/5] bg-agujita-primary/10 rounded-2xl overflow-hidden shadow-2xl relative border border-agujita-primary/5 group"
     >
-      <img
-        src="/img/hero.jpg"
+      <Image
+        src={heroImage}
         alt="Trabajo de costura creativa de Mi Agujita"
         class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
       />
