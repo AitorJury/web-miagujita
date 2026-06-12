@@ -1,11 +1,37 @@
 ---
+/**
+ * @file Footer.astro
+ * @description Componente global de pie de página.
+ *
+ * Arquitectura y Semántica:
+ * - Uso de la etiqueta <address> para encapsular metadatos de contacto, mejorando
+ *   significativamente el SEO local y el parseo por parte de crawlers.
+ * - Variables cacheadas en tiempo de compilación (SSG) en el frontmatter para evitar
+ *   ejecución innecesaria de JS en el cliente (ej. currentYear).
+ * - Seguridad: Los enlaces con target="_blank" implementan rel="noopener noreferrer"
+ *   para mitigar ataques de reverse tabnabbing.
+ */
 
+const currentYear = new Date().getFullYear();
 ---
 
-<footer class="bg-agujita-text text-white py-16 mt-20 rounded-t-3xl">
+<!-- 
+  Añadimos aria-labelledby para que los lectores de pantalla puedan identificar 
+  rápidamente el propósito de esta región de la página.
+-->
+<footer
+  class="bg-agujita-text text-white py-16 mt-20 rounded-t-3xl"
+  aria-labelledby="footer-heading"
+>
+  <!-- Título oculto visualmente pero accesible para SEO y a11y -->
+  <h2 id="footer-heading" class="sr-only">
+    Información de pie de página e información de contacto
+  </h2>
+
   <div
     class="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-12 text-center md:text-left"
   >
+    <!-- Branding -->
     <div class="space-y-4">
       <h3 class="font-serif text-3xl text-agujita-primary">Mi Agujita</h3>
       <p class="text-sm text-white/80 leading-relaxed">
@@ -14,27 +40,35 @@
       </p>
     </div>
 
+    <!-- Contacto Semántico -->
     <div class="space-y-4">
       <h4
         class="font-bold uppercase tracking-widest text-xs text-agujita-primary"
       >
         Contacto
       </h4>
-      <ul class="text-sm text-white/80 space-y-3">
-        <li class="flex items-center justify-center md:justify-start gap-2">
-          <span>📍</span> Barcelona · Envíos a toda España 🇪🇸
-        </li>
-        <li class="flex items-center justify-center md:justify-start gap-2">
-          <span>💌</span>
+      <!-- 
+        La etiqueta <address> indica explícitamente que el contenido es información 
+        de contacto del autor/propietario del documento.
+      -->
+      <address class="not-italic text-sm text-white/80 space-y-3">
+        <p class="flex items-center justify-center md:justify-start gap-2 m-0">
+          <span aria-hidden="true">📍</span> Barcelona · Envíos a toda España 🇪🇸
+        </p>
+        <p class="flex items-center justify-center md:justify-start gap-2 m-0">
+          <span aria-hidden="true">💌</span>
           <a
             href="mailto:miagujita13@gmail.com"
-            class="hover:text-agujita-primary transition-colors"
-            >miagujita13@gmail.com</a
+            class="hover:text-agujita-primary transition-colors focus:outline-none focus:ring-2 focus:ring-agujita-primary rounded-sm"
+            aria-label="Enviar un correo electrónico a miagujita13@gmail.com"
           >
-        </li>
-      </ul>
+            miagujita13@gmail.com
+          </a>
+        </p>
+      </address>
     </div>
 
+    <!-- Redes Sociales -->
     <div class="space-y-4">
       <h4
         class="font-bold uppercase tracking-widest text-xs text-agujita-primary"
@@ -46,7 +80,8 @@
           href="https://www.instagram.com/mi_agujita/"
           target="_blank"
           rel="noopener noreferrer"
-          class="px-6 py-2 border border-agujita-primary/50 text-white rounded-full hover:bg-agujita-primary hover:border-agujita-primary transition-all text-sm"
+          class="px-6 py-2 border border-agujita-primary/50 text-white rounded-full hover:bg-agujita-primary hover:border-agujita-primary transition-all text-sm focus:outline-none focus:ring-2 focus:ring-agujita-primary"
+          aria-label="Visitar el perfil de Instagram de Mi Agujita (se abre en una nueva pestaña)"
         >
           Instagram
         </a>
@@ -54,25 +89,30 @@
     </div>
   </div>
 
+  <!-- Copyright & Créditos del Desarrollador -->
   <div
-    class="max-w-7xl mx-auto px-6 mt-16 pt-8 border-t border-white/10 flex flex-col md:flex-col lg:flex-row items-center justify-between gap-6 text-xs text-white/40"
+    class="max-w-7xl mx-auto px-6 mt-16 pt-8 border-t border-white/10 flex flex-col md:flex-row items-center justify-between gap-6 text-xs text-white/40"
   >
-    <span
-      >© {new Date().getFullYear()} Mi Agujita. Todos los derechos reservados.</span
-    >
+    <span>© {currentYear} Mi Agujita. Todos los derechos reservados.</span>
 
-    <span class="text-center">
-      Desarrollo web por <a
+    <span class="text-center md:text-right">
+      Desarrollo web por
+      <a
         href="https://www.linkedin.com/in/aitor-jury"
         target="_blank"
         rel="noopener noreferrer"
-        class="text-white hover:text-agujita-primary transition-colors font-medium"
-        >Aitor Jury Rodríguez (Software Developer)</a
-      > |
+        class="text-white hover:text-agujita-primary transition-colors font-medium focus:outline-none focus:underline"
+        aria-label="Perfil de LinkedIn de Aitor Jury Rodríguez, desarrollador de software"
+      >
+        Aitor Jury Rodríguez (Software Developer)
+      </a> |
       <a
         href="mailto:aitor.jury.rodriguez@gmail.com"
-        class="hover:text-agujita-primary transition-colors">Contactar</a
+        class="hover:text-agujita-primary transition-colors ml-1 focus:outline-none focus:underline"
+        aria-label="Enviar un correo al desarrollador web"
       >
+        Contactar
+      </a>
     </span>
   </div>
 </footer>

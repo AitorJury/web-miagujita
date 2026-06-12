@@ -1,4 +1,17 @@
 ---
+/**
+ * @file Pricing.astro
+ * @description Listado de tarifas base para servicios de composturas.
+ *
+ * Estrategia de Implementación:
+ * - Estructura de Datos Estática: Se definen los precios en el frontmatter para aprovechar
+ *   el renderizado en tiempo de compilación (SSG), eliminando carga JS en el cliente.
+ * - Layout Editorial: Implementación de "líderes de puntos" (dotted lines) mediante
+ *   flexbox dinámico para emular el estilo de cartas de precios de boutiques tradicionales.
+ * - Mantenibilidad: Los arreglos de objetos permiten añadir nuevos servicios sin
+ *   necesidad de remaquetar el HTML.
+ */
+
 const pantalones = [
   { item: "Bajos a mano", price: "8€" },
   { item: "Bajos a máquina", price: "5€" },
@@ -16,15 +29,22 @@ const camisas = [
 ];
 ---
 
-<section id="tarifas" class="max-w-5xl mx-auto px-6 py-20">
-  <div class="text-center mb-16 space-y-4">
-    <h2 class="font-serif text-4xl lg:text-5xl text-agujita-text">
+<section
+  id="tarifas"
+  class="max-w-5xl mx-auto px-6 py-20"
+  aria-labelledby="pricing-heading"
+>
+  <header class="text-center mb-16 space-y-4">
+    <h2
+      id="pricing-heading"
+      class="font-serif text-4xl lg:text-5xl text-agujita-text"
+    >
       Lista de <span class="text-agujita-primary italic">Precios</span>
     </h2>
     <p class="font-sans text-agujita-text/70 text-lg">
       Tarifas base para composturas y arreglos
     </p>
-  </div>
+  </header>
 
   <div class="grid grid-cols-1 md:grid-cols-2 gap-16">
     <div class="space-y-6">
@@ -36,13 +56,18 @@ const camisas = [
       <ul class="space-y-4">
         {
           pantalones.map((line) => (
-            <li class="flex items-baseline justify-between font-sans">
-              <span class="text-agujita-text/80">{line.item}</span>
-              <div class="flex-grow border-b border-dotted border-agujita-text/20 mx-4" />
-              <span class="text-agujita-text font-medium text-right">
+            <li class="flex items-baseline justify-between font-sans group">
+              <span class="text-agujita-text/80 group-hover:text-agujita-text transition-colors">
+                {line.item}
+              </span>
+              <div
+                class="flex-grow border-b border-dotted border-agujita-text/20 mx-4"
+                aria-hidden="true"
+              />
+              <span class="text-agujita-text font-medium text-right whitespace-nowrap">
                 {line.price}
                 {line.note && (
-                  <span class="text-xs text-agujita-text/50 block font-normal">
+                  <span class="text-[10px] text-agujita-text/50 block font-normal leading-none mt-1">
                     {line.note}
                   </span>
                 )}
@@ -62,13 +87,18 @@ const camisas = [
       <ul class="space-y-4">
         {
           camisas.map((line) => (
-            <li class="flex items-baseline justify-between font-sans">
-              <span class="text-agujita-text/80">{line.item}</span>
-              <div class="flex-grow border-b border-dotted border-agujita-text/20 mx-4" />
-              <span class="text-agujita-text font-medium text-right">
+            <li class="flex items-baseline justify-between font-sans group">
+              <span class="text-agujita-text/80 group-hover:text-agujita-text transition-colors">
+                {line.item}
+              </span>
+              <div
+                class="flex-grow border-b border-dotted border-agujita-text/20 mx-4"
+                aria-hidden="true"
+              />
+              <span class="text-agujita-text font-medium text-right whitespace-nowrap">
                 {line.price}
                 {line.note && (
-                  <span class="text-xs text-agujita-text/50 block font-normal">
+                  <span class="text-[10px] text-agujita-text/50 block font-normal leading-none mt-1">
                     {line.note}
                   </span>
                 )}
@@ -80,8 +110,13 @@ const camisas = [
     </div>
   </div>
 
-  <div class="mt-12 text-center text-sm text-agujita-text/60 italic font-sans">
-    * Consulta para más arreglos (faldas, chaquetas, sudaderas y hogar). Los
-    precios pueden variar según la complejidad.
-  </div>
+  <footer
+    class="mt-12 text-center text-sm text-agujita-text/60 italic font-sans max-w-2xl mx-auto"
+  >
+    <p>
+      * Consulta para más arreglos (faldas, chaquetas, sudaderas y hogar). Los
+      precios pueden variar según la complejidad técnica de la prenda o el
+      tejido.
+    </p>
+  </footer>
 </section>

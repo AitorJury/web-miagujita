@@ -1,13 +1,38 @@
 ---
+/**
+ * @file Hero.astro
+ * @description Componente "Above the Fold" (Sección Hero principal).
+ * * Aspectos Técnicos y Rendimiento (Core Web Vitals):
+ * - LCP (Largest Contentful Paint): La imagen principal está configurada con `loading="eager"`
+ * y `fetchpriority="high"` para indicar al navegador que es crítica y debe renderizarse
+ * inmediatamente, optimizando el tiempo de carga percibido.
+ * - Arquitectura de Layout: Uso de flexbox responsivo (Mobile First) que prioriza el
+ * copywriting y el CTA en dispositivos móviles, pasando a una distribución asimétrica
+ * (50/50) en pantallas medianas y grandes.
+ * - Elementos decorativos: Los círculos de fondo usan z-index negativo (`-z-10`) y no
+ * interfieren con el flujo del DOM ni con los clics del usuario.
+ */
+
 import { Image } from "astro:assets";
 import heroImage from "../assets/img/hero.jpg";
+
+// Variables constantes para facilitar la mantenibilidad y evitar hardcoding
+const WHATSAPP_NUMBER = "34610854434";
+const WA_MESSAGE = encodeURIComponent(
+  "¡Hola Gladys! Vengo de tu web y me gustaría hacerte una consulta...",
+);
+const WHATSAPP_URL = `https://wa.me/${WHATSAPP_NUMBER}?text=${WA_MESSAGE}`;
 ---
 
 <section
   class="max-w-7xl mx-auto px-6 py-20 md:py-32 flex flex-col md:flex-row items-center gap-12 lg:gap-20"
+  aria-labelledby="hero-heading"
 >
   <div class="w-full md:w-1/2 space-y-8 z-10">
-    <h1 class="font-serif text-5xl lg:text-7xl leading-tight text-agujita-text">
+    <h1
+      id="hero-heading"
+      class="font-serif text-5xl lg:text-7xl leading-tight text-agujita-text"
+    >
       Costura creativa <br />
       <span class="text-agujita-primary italic">& piezas con alma</span>
     </h1>
@@ -21,29 +46,33 @@ import heroImage from "../assets/img/hero.jpg";
 
     <div class="pt-4 flex flex-wrap gap-4">
       <a
-        href="https://wa.me/34610854434?text=¡Hola%20Gladys!%20Vengo%20de%20tu%20web%20y%20me%20gustaría%20hacerte%20una%20consulta..."
+        href={WHATSAPP_URL}
         target="_blank"
         rel="noopener noreferrer"
-        class="px-8 py-4 bg-agujita-text text-white rounded-full font-medium hover:bg-agujita-primary transition-colors shadow-lg cursor-pointer"
+        class="px-8 py-4 bg-agujita-text text-white rounded-full font-medium hover:bg-agujita-primary transition-colors shadow-lg cursor-pointer focus:outline-none focus:ring-4 focus:ring-agujita-primary/50"
+        aria-label="Abrir WhatsApp para hablar sobre tu idea con Gladys"
       >
         Hablemos de tu idea
       </a>
       <a
         href="#galeria"
-        class="px-8 py-4 bg-transparent border border-agujita-text/20 text-agujita-text rounded-full font-medium hover:border-agujita-primary hover:text-agujita-primary transition-colors cursor-pointer"
+        class="px-8 py-4 bg-transparent border border-agujita-text/20 text-agujita-text rounded-full font-medium hover:border-agujita-primary hover:text-agujita-primary transition-colors cursor-pointer focus:outline-none focus:ring-4 focus:ring-agujita-primary/30"
+        aria-label="Desplazarse a la galería de trabajos realizados"
       >
         Ver trabajos
       </a>
     </div>
   </div>
 
-  <div class="w-full md:w-1/2 relative">
+  <div class="w-full md:w-1/2 relative" aria-hidden="true">
     <div
-      class="aspect-[4/5] bg-agujita-primary/10 rounded-2xl overflow-hidden shadow-2xl relative border border-agujita-primary/5 group"
+      class="aspect-4/5 bg-agujita-primary/10 rounded-2xl overflow-hidden shadow-2xl relative border border-agujita-primary/5 group"
     >
       <Image
         src={heroImage}
-        alt="Trabajo de costura creativa de Mi Agujita"
+        alt="Manos trabajando en costura creativa en el taller de Mi Agujita"
+        loading="eager"
+        fetchpriority="high"
         class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
       />
     </div>

@@ -1,4 +1,18 @@
 ---
+/**
+ * @file Layout.astro
+ * @description Layout global (App Shell) que envuelve todas las páginas de la aplicación.
+ * * Arquitectura y Rendimiento:
+ * - Patrón de Composición: Usa el elemento <slot /> nativo de Astro para inyectar
+ * el contenido hijo, manteniendo la estructura HTML base y los metadatos centralizados.
+ * - SPA Feeling (ClientRouter): Implementa la API de View Transitions de Astro 5.
+ * Intercepta la navegación para hacer un "diffing" (comparación) del DOM y animar
+ * los cambios, logrando que una web estática (MPA) rinda y se sienta como una
+ * Single Page Application (SPA).
+ * - SEO & Open Graph: Configuración base para indexación correcta en Google y
+ * previsualizaciones enriquecidas (tarjetas con foto) al compartir en WhatsApp o redes sociales.
+ */
+
 import "../styles/global.css";
 import { ClientRouter } from "astro:transitions";
 import Analytics from "@vercel/analytics/astro";
@@ -15,6 +29,7 @@ const { title } = Astro.props;
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
     <title>{title}</title>
     <meta
       name="description"
@@ -40,10 +55,12 @@ const { title } = Astro.props;
 
     <ClientRouter />
   </head>
+
   <body class="min-h-screen flex flex-col">
     <main class="grow">
       <slot />
     </main>
+
     <Analytics />
   </body>
 </html>

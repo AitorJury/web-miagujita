@@ -1,27 +1,60 @@
+/**
+ * @file global.css
+ * @description Hoja de estilos global y base del Design System.
+ * * Arquitectura de Estilos (Modern Tailwind v4):
+ * - Design Tokens: Definición centralizada de la paleta de colores y tipografías 
+ * mediante la nueva directiva @theme. Esto moderniza el stack eliminando la 
+ * necesidad del antiguo archivo tailwind.config.js.
+ * - Variables Nativas: Aprovechamos las Custom Properties de CSS para que el 
+ * navegador gestione el tema de forma nativa y ultra-rápida.
+ * - Tipografía Avanzada: Aplicamos técnicas de font-smoothing en el @layer base 
+ * para garantizar un renderizado nítido y premium en pantallas Retina/OLED.
+ */
+
 @import "tailwindcss";
 
 @theme {
-    /* Nuestras constantes de color */
+    /* * Brand Identity (Identidad de Marca)
+   * Tonos cálidos y limpios que transmiten artesanía y delicadeza.
+   */
     --color-agujita-bg: #fdf8f9;
+
+    /* Usamos un gris oscuro en lugar de negro puro (#000) para reducir la fatiga visual */
     --color-agujita-text: #374151;
+
     --color-agujita-primary: #c87c8c;
-    --color-agujita-accent: #dc2626;
+
+    /* Actualizamos el acento a un tono Rose-700 (#be123c) a juego con el botón del Header */
+    --color-agujita-accent: #be123c;
+
     --color-agujita-surface: #ffffff;
     --color-agujita-muted: #d6d3d1;
 
-
-    /* Tipografías */
+    /* * Stack Tipográfico
+   * Contraste clásico: Serif para titulares (Playfair) y Sans para legibilidad (Inter)
+   */
     --font-serif: "Playfair Display", serif;
     --font-sans: "Inter", sans-serif;
 }
 
+/* * Reset y configuración del documento base.
+ * @layer base asegura que estas reglas se inyecten en el orden correcto 
+ * del CSS final generado por Tailwind.
+ */
 @layer base {
     body {
         background-color: var(--color-agujita-bg);
         color: var(--color-agujita-text);
         font-family: var(--font-sans);
+
+        /* * Optimizaciones de renderizado:
+     * Obliga a macOS/iOS a usar un algoritmo de renderizado de fuentes más preciso,
+     * evitando que el texto claro sobre fondos oscuros se vea "gordo" o emborronado.
+     */
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
+
+        /* Interlineado (leading) óptimo para mejorar la legibilidad en pantallas */
         line-height: 1.625;
     }
 }
