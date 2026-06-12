@@ -1,15 +1,37 @@
 ---
-
+/**
+ * @file Philosophy.astro
+ * @description Componente de declaración de intenciones / "Sobre mí".
+ * * Aspectos Técnicos y Semánticos:
+ * - Descanso visual (Negative Space): Utiliza un fondo con opacidad muy baja
+ * (`bg-agujita-primary/5`) y márgenes amplios (`py-24 my-20`) para dar respiro
+ * cognitivo al usuario entre secciones con alta densidad de información (Hero y Categorías).
+ * - Accesibilidad (a11y): Los elementos puramente visuales (emojis decorativos y líneas
+ * divisorias) se ocultan del árbol de accesibilidad mediante `aria-hidden="true"`.
+ * - Tipografía fluida: Uso de clases responsivas (`text-lg md:text-xl`) y anchos máximos
+ * (`max-w-2xl`) para mantener los caracteres por línea (CPL) en el rango óptimo de legibilidad (50-75).
+ */
 ---
 
-<section id="filosofia" class="bg-agujita-primary/5 py-24 my-20">
+<section
+  id="filosofia"
+  class="bg-agujita-primary/5 py-24 my-20"
+  aria-labelledby="filosofia-heading"
+>
   <div class="max-w-4xl mx-auto px-6 text-center space-y-8">
-    <span class="text-4xl">✨</span>
-    <h2 class="font-serif text-4xl lg:text-5xl text-agujita-text leading-tight">
+    <span class="text-4xl block" aria-hidden="true">✨</span>
+
+    <h2
+      id="filosofia-heading"
+      class="font-serif text-4xl lg:text-5xl text-agujita-text leading-tight"
+    >
       No es solo coser, es crear <br />
       <span class="text-agujita-primary italic">piezas con alma</span>
     </h2>
-    <div class="w-16 h-[1px] bg-agujita-primary/30 mx-auto"></div>
+
+    <div class="w-16 h-[1px] bg-agujita-primary/30 mx-auto" aria-hidden="true">
+    </div>
+
     <p
       class="font-sans text-lg md:text-xl text-agujita-text/80 leading-relaxed max-w-2xl mx-auto"
     >

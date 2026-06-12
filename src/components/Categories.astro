@@ -1,5 +1,18 @@
 ---
-// Definimos la estructura de datos (el "Modelo") para las categorías
+/**
+ * @file Categories.astro
+ * @description Componente de servicios principales.
+ * Arquitectura basada en datos (Data-Driven): Separamos el modelo de datos (categories)
+ * de la capa de presentación (JSX/HTML). Esto permite una escalabilidad O(1) al añadir,
+ * modificar o eliminar servicios sin alterar la estructura del DOM.
+ */
+
+// Centralizamos el número de teléfono para facilitar el mantenimiento futuro.
+const WHATSAPP_NUMBER = "34610854434";
+const WA_MESSAGE = encodeURIComponent(
+  "¡Hola Gladys! Vengo de tu web y me gustaría hacerte una consulta sobre Textil Hogar.",
+);
+
 const categories = [
   {
     title: "Costura Creativa",
@@ -7,7 +20,7 @@ const categories = [
       "Piezas únicas con alma: neceseres, estuches, riñoneras y bolsas totalmente personalizables en tamaño, telas y bordados.",
     tag: "100% Personalizable",
     icon: "🧵",
-    link: "#galeria",
+    link: "#galeria", // Enrutamiento interno: Anclaje a la galería de proyectos
   },
   {
     title: "Arreglos y Composturas",
@@ -15,7 +28,7 @@ const categories = [
       "Especialista en adaptar tu ropa para que te quede perfecta. Bajos a mano/máquina, cambio de cremalleras, entallar faldas y vestidos.",
     tag: "Servicio Local",
     icon: "🪡",
-    link: "#galeria",
+    link: "#tarifas", // Enrutamiento interno: Anclaje directo a la lista de precios
   },
   {
     title: "Textil Hogar",
@@ -23,35 +36,55 @@ const categories = [
       "Confección a medida para vestir tu casa. Cortinas, delantales de cocina, paños, individuales y aplicaciones de patchwork.",
     tag: "A medida",
     icon: "🏠",
-    link: "#galeria",
+    link: `https://wa.me/${WHATSAPP_NUMBER}?text=${WA_MESSAGE}`, // Deep link: Redirección externa a la API de WhatsApp
   },
 ];
 ---
 
-<section id="servicios" class="max-w-7xl mx-auto px-6 py-20 bg-transparent">
-  <div class="text-center max-w-3xl mx-auto mb-16 space-y-4">
-    <h2 class="font-serif text-4xl lg:text-5xl text-agujita-text">
+<section
+  id="servicios"
+  class="max-w-7xl mx-auto px-6 py-20 bg-transparent"
+  aria-labelledby="servicios-title"
+>
+  <header class="text-center max-w-3xl mx-auto mb-16 space-y-4">
+    <h2
+      id="servicios-title"
+      class="font-serif text-4xl lg:text-5xl text-agujita-text"
+    >
       ¿Qué vas a encontrar en <span class="text-agujita-primary italic"
         >Mi Agujita</span
       >?
     </h2>
-    <div class="w-12 h-[2px] bg-agujita-primary mx-auto my-4"></div>
+    <div
+      class="w-12 h-[2px] bg-agujita-primary mx-auto my-4"
+      aria-hidden="true"
+    >
+    </div>
     <p class="font-sans text-agujita-text/70 text-lg">
       Artesanía textil que combina la tradición de los arreglos de siempre con
       la creatividad de complementos únicos.
     </p>
-  </div>
+  </header>
 
   <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
     {
       categories.map((item) => (
+        /* * Tarjeta interactiva.
+         * Aplicamos la Ley de Fitts: en lugar de poner un pequeño enlace dentro,
+         * convertimos toda la tarjeta en una etiqueta <a>.
+         * La clase 'group' de Tailwind nos permite crear efectos hover coordinados
+         * en los elementos hijos (textos, flechas) cuando el usuario pasa el ratón por cualquier parte de la caja.
+         */
         <a
           href={item.link}
           class="block bg-white p-8 rounded-2xl border border-agujita-primary/10 shadow-sm hover:shadow-md transition-all duration-300 flex flex-col justify-between group hover:-translate-y-1"
+          aria-label={`Ver información sobre ${item.title}`}
         >
           <div class="space-y-6">
             <div class="flex items-center justify-between">
-              <span class="text-4xl">{item.icon}</span>
+              <span class="text-4xl" aria-hidden="true">
+                {item.icon}
+              </span>
               <span class="text-xs uppercase tracking-wider font-semibold text-agujita-primary bg-agujita-primary/10 px-3 py-1 rounded-full">
                 {item.tag}
               </span>
@@ -69,7 +102,7 @@ const categories = [
 
           <div class="pt-6 border-t border-dashed border-stone-100 mt-6">
             <span class="text-xs uppercase tracking-widest font-bold text-agujita-text group-hover:text-agujita-primary transition-colors flex items-center gap-2">
-              Consultar opciones ➔
+              Consultar opciones <span aria-hidden="true">➔</span>
             </span>
           </div>
         </a>

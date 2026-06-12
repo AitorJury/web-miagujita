@@ -1,28 +1,53 @@
 ---
+/**
+ * @file Gallery.astro
+ * @description Componente de cuadrícula (grid) para la exhibición de trabajos/productos.
+ * * Arquitectura y Rendimiento:
+ * - Renderizado dinámico basado en datos (Data-Driven) consumiendo `products.js`.
+ * - Uso del componente nativo <Image> de Astro para optimización automática (conversión a WebP,
+ * redimensionado en tiempo de compilación y lazy loading nativo).
+ * - Integración con la API de View Transitions de Astro (`transition:name`) para
+ * animaciones fluidas de tipo "Shared Element Transition" hacia la vista de detalle.
+ * - UX móvil: Degradado permanente en la base para asegurar el contraste del texto
+ * y la visibilidad de la acción, sin depender del estado `:hover` (inexistente en táctil).
+ */
+
 import { products } from "../data/products.js";
 import { Image } from "astro:assets";
 ---
 
-<section id="galeria" class="max-w-7xl mx-auto px-6 py-20">
-  <div class="text-center mb-12 space-y-4">
-    <h2 class="font-serif text-4xl lg:text-5xl text-agujita-text">
+<section
+  id="galeria"
+  class="max-w-7xl mx-auto px-6 py-20"
+  aria-labelledby="galeria-title"
+>
+  <header class="text-center mb-12 space-y-4">
+    <h2
+      id="galeria-title"
+      class="font-serif text-4xl lg:text-5xl text-agujita-text"
+    >
       Algunos de mis <span class="text-agujita-primary italic">trabajos</span>
     </h2>
     <p class="font-sans text-agujita-text/70 text-lg">
       Inspiración directa desde el taller
     </p>
-  </div>
+  </header>
 
   <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
     {
       products.map((item) => (
+        /* * Contenedor interactivo principal.
+         * El atributo aria-label proporciona contexto descriptivo a la acción,
+         * ya que el lector de pantalla podría leer solo "Ver detalles" de forma aislada.
+         */
         <a
           href={`/producto/${item.id}`}
-          class={`group relative rounded-2xl overflow-hidden shadow-sm border border-agujita-primary/10 block ${item.class}`}
+          class={`group relative rounded-2xl overflow-hidden shadow-sm border border-agujita-primary/10 block focus:outline-none focus:ring-4 focus:ring-agujita-primary/50 transition-shadow ${item.class}`}
+          aria-label={`Ver detalles del trabajo: ${item.title}`}
         >
           <Image
             src={item.image}
-            alt={item.title}
+            alt={`Fotografía del trabajo: ${item.title}`}
             transition:name={`img-${item.id}`}
             class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
           />
@@ -31,8 +56,12 @@ import { Image } from "astro:assets";
             <h3 class="font-serif text-xl md:text-2xl text-white font-medium drop-shadow-md">
               {item.title}
             </h3>
+
             <span class="text-xs font-bold text-white/90 uppercase tracking-widest mt-2 flex items-center gap-1 group-hover:text-agujita-primary transition-colors duration-300">
-              Ver detalles <span class="text-lg leading-none">→</span>
+              Ver detalles{" "}
+              <span class="text-lg leading-none" aria-hidden="true">
+                →
+              </span>
             </span>
           </div>
         </a>

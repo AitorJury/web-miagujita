@@ -1,9 +1,33 @@
+---
+/**
+ * @file Header.astro
+ * @description Componente de navegación persistente (Sticky Header).
+ *
+ * Aspectos Técnicos:
+ * - Glassmorphism: Implementación de 'backdrop-blur-md' con opacidad del 80% para
+ *   mantener el contexto visual del contenido al hacer scroll.
+ * - Posicionamiento: Uso de 'sticky top-0' y un z-index elevado (z-50) para asegurar
+ *   la accesibilidad de la navegación en todo momento.
+ * - UX: Transiciones suaves en colores de texto y fondos para una experiencia de usuario refinada.
+ */
+
+const WHATSAPP_NUMBER = "34610854434";
+const CONTACT_MESSAGE = encodeURIComponent(
+  "¡Hola Gladys! Vengo de tu web y me gustaría consultarte sobre una pieza personalizada.",
+);
+const WHATSAPP_URL = `https://wa.me/${WHATSAPP_NUMBER}?text=${CONTACT_MESSAGE}`;
+---
+
 <header
   class="sticky top-0 z-50 w-full bg-agujita-bg/80 backdrop-blur-md border-b border-agujita-primary/10 transition-all duration-300"
+  role="banner"
 >
   <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
-    <!-- Logo / Marca -->
-    <a href="/" class="flex items-center gap-2 group">
+    <a
+      href="/"
+      class="flex items-center gap-2 group"
+      aria-label="Ir al inicio de Mi Agujita"
+    >
       <span
         class="font-serif text-2xl font-bold tracking-wide text-agujita-text group-hover:text-agujita-primary transition-colors"
       >
@@ -11,30 +35,33 @@
       </span>
     </a>
 
-    <nav class="hidden md:flex gap-8">
+    <nav class="hidden md:flex gap-8" aria-label="Navegación principal">
       <a
         href="#galeria"
-        class="text-sm uppercase tracking-widest font-medium text-agujita-text hover:text-agujita-primary transition-colors"
-        >Galería</a
+        class="text-sm uppercase tracking-widest font-medium text-agujita-text hover:text-agujita-primary transition-colors focus:outline-none focus:underline underline-offset-4"
       >
+        Galería
+      </a>
       <a
         href="#filosofia"
-        class="text-sm uppercase tracking-widest font-medium text-agujita-text hover:text-agujita-primary transition-colors"
-        >Filosofía</a
+        class="text-sm uppercase tracking-widest font-medium text-agujita-text hover:text-agujita-primary transition-colors focus:outline-none focus:underline underline-offset-4"
       >
-
+        Filosofía
+      </a>
       <a
         href="#tarifas"
-        class="text-sm uppercase tracking-widest font-medium text-agujita-text hover:text-agujita-primary transition-colors"
-        >Precios</a
+        class="text-sm uppercase tracking-widest font-medium text-agujita-text hover:text-agujita-primary transition-colors focus:outline-none focus:underline underline-offset-4"
       >
+        Precios
+      </a>
     </nav>
 
     <a
-      href="https://wa.me/34600000000?text=¡Hola%20Gladys!%20Vengo%20de%20tu%20web..."
+      href={WHATSAPP_URL}
       target="_blank"
       rel="noopener noreferrer"
-      class="px-6 py-2.5 text-sm font-medium text-white bg-rose-700 rounded-full hover:bg-rose-800 transition-colors shadow-sm hover:shadow-md"
+      class="px-6 py-2.5 text-sm font-medium text-white bg-rose-700 rounded-full hover:bg-rose-800 transition-all shadow-sm hover:shadow-md focus:outline-none focus:ring-2 focus:ring-rose-500 focus:ring-offset-2"
+      aria-label="Contactar por WhatsApp para encargar una pieza personalizada"
     >
       Encarga tu pieza
     </a>

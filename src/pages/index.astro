@@ -1,4 +1,20 @@
 ---
+/**
+ * @file index.astro
+ * @description Página principal (Home / Entry Point) de la aplicación.
+ * * Patrón de Diseño (Composition & Component-Driven Architecture):
+ * - Orquestador (Composition Root): Su única responsabilidad es importar y apilar
+ * componentes funcionales independientes. No contiene lógica de negocio ni
+ * estilos CSS propios, respetando estrictamente el principio de Separation of Concerns.
+ * * Diseño de Experiencia de Usuario (UX) y User Journey:
+ * El flujo vertical está estructurado como un embudo de conversión (Funnel):
+ * 1. Hero: Propuesta de valor inmediata y CTAs principales (Above the fold).
+ * 2. Philosophy: Storytelling para generar conexión emocional y confianza.
+ * 3. Categories: Descubrimiento claro de las líneas de negocio.
+ * 4. Pricing: Transparencia para cualificar al usuario antes del contacto.
+ * 5. Gallery: Portfolio visual que actúa como prueba definitiva de calidad.
+ */
+
 import Layout from "../layouts/Layout.astro";
 import Header from "../components/Header.astro";
 import Hero from "../components/Hero.astro";
@@ -13,13 +29,9 @@ import Footer from "../components/Footer.astro";
   <Header />
 
   <Hero />
-
   <Philosophy />
-
   <Categories />
-
   <Pricing />
-
   <Gallery />
 
   <Footer />

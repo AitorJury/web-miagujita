@@ -1,21 +1,39 @@
 ---
+/**
+ * @file [id].astro
+ * @description Plantilla dinámica para las páginas de detalle de producto.
+ *
+ * Arquitectura y Generación Estática (SSG):
+ * - Uso de `getStaticPaths()`: Instruye al compilador de Astro para que genere una
+ * página HTML estática por cada objeto en `products.js` durante el `build`.
+ * Esto garantiza un TTFB (Time to First Byte) mínimo y máxima seguridad (no hay base de datos expuesta).
+ * - Deep Linking & Conversión: Genera URLs dinámicas para WhatsApp (`urlWhatsApp`),
+ * reduciendo la fricción del usuario al pre-rellenar el contexto de la consulta.
+ * - View Transitions: Vinculación del atributo `transition:name` con el identificador único
+ * del producto para interpolar la imagen desde la galería hasta esta vista de detalle sin cortes.
+ */
+
 import Layout from "../../layouts/Layout.astro";
 import Header from "../../components/Header.astro";
 import Footer from "../../components/Footer.astro";
 import { products } from "../../data/products.js";
 import { Image } from "astro:assets";
 
+// Función core de Astro para rutas dinámicas
 export function getStaticPaths() {
   return products.map((product) => ({
-    params: { id: product.id },
-    props: { product },
+    params: { id: product.id }, // El slug que aparece en la URL (/producto/neceser-personalizado)
+    props: { product }, // Pasamos el objeto completo como propiedad a la vista
   }));
 }
 
+// Desestructuración de los datos del producto actual inyectados por getStaticPaths
 const { product } = Astro.props;
 
+// Lógica de negocio: Construcción segura de la URL de conversión
 const numeroWhatsApp = "34610854434";
 const mensajeBase = `¡Hola Gladys! Vengo de tu web y me interesa: ${product.title}. ¿Me puedes dar más información?`;
+// encodeURIComponent es vital para evitar que caracteres especiales (ñ, tildes, espacios) rompan el enlace HTTP
 const urlWhatsApp = `https://wa.me/${numeroWhatsApp}?text=${encodeURIComponent(mensajeBase)}`;
 ---
 
@@ -25,18 +43,21 @@ const urlWhatsApp = `https://wa.me/${numeroWhatsApp}?text=${encodeURIComponent(m
   <main class="max-w-7xl mx-auto px-6 py-12 md:py-24 grow">
     <a
       href="/#galeria"
-      class="inline-flex items-center gap-2 text-agujita-text/60 hover:text-agujita-primary transition-colors mb-12 font-medium"
+      class="inline-flex items-center gap-2 text-agujita-text/60 hover:text-agujita-primary transition-colors mb-12 font-medium focus:outline-none focus:ring-2 focus:ring-agujita-primary/50 rounded-sm px-1 -ml-1"
+      aria-label="Volver a la galería de trabajos"
     >
-      <span class="text-xl">←</span> Volver a la galería
+      <span class="text-xl" aria-hidden="true">←</span> Volver a la galería
     </a>
 
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-12 lg:gap-20 items-center">
+    <article
+      class="grid grid-cols-1 md:grid-cols-2 gap-12 lg:gap-20 items-center"
+    >
       <div
         class="rounded-3xl overflow-hidden shadow-2xl border border-agujita-primary/10 aspect-4/5"
       >
         <Image
           src={product.image}
-          alt={product.title}
+          alt={`Fotografía detallada del trabajo: ${product.title}`}
           transition:name={`img-${product.id}`}
           class="w-full h-full object-cover"
         />
@@ -55,7 +76,8 @@ const urlWhatsApp = `https://wa.me/${numeroWhatsApp}?text=${encodeURIComponent(m
           {product.title}
         </h1>
 
-        <div class="w-16 h-[2px] bg-agujita-primary/30"></div>
+        <div class="w-16 h-[2px] bg-agujita-primary/30" aria-hidden="true">
+        </div>
 
         <p class="font-sans text-lg text-agujita-text/80 leading-relaxed">
           {product.description}
@@ -66,10 +88,11 @@ const urlWhatsApp = `https://wa.me/${numeroWhatsApp}?text=${encodeURIComponent(m
             href={urlWhatsApp}
             target="_blank"
             rel="noopener noreferrer"
-            class="px-8 py-4 bg-agujita-text text-white rounded-full font-medium hover:bg-agujita-primary transition-colors shadow-lg text-center flex items-center justify-center gap-2"
+            class="px-8 py-4 bg-agujita-text text-white rounded-full font-medium hover:bg-agujita-primary transition-all shadow-lg text-center flex items-center justify-center gap-2 focus:outline-none focus:ring-4 focus:ring-agujita-primary/50"
+            aria-label={`Abrir WhatsApp para preguntar por ${product.title}`}
           >
             <span>Preguntar por este trabajo</span>
-            <span class="text-xl">💬</span>
+            <span class="text-xl" aria-hidden="true">💬</span>
           </a>
         </div>
 
@@ -78,7 +101,7 @@ const urlWhatsApp = `https://wa.me/${numeroWhatsApp}?text=${encodeURIComponent(m
           facilitarte la consulta.
         </p>
       </div>
-    </div>
+    </article>
   </main>
 
   <Footer />
