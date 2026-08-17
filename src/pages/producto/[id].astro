@@ -9,7 +9,7 @@ import { Image } from "astro:assets";
 export async function getStaticPaths() {
   const products = await getCollection("productos");
   return products.map((product: CollectionEntry<"productos">) => ({
-    params: { id: product.slug },
+    params: { id: product.id }, // <--- CAMBIO AQUÍ (slug por id)
     props: { product },
   }));
 }
@@ -48,7 +48,7 @@ const urlWhatsApp = `https://wa.me/${numeroWhatsApp}?text=${encodeURIComponent(m
         <Image
           src={product.data.image}
           alt={`Fotografía detallada del trabajo: ${product.data.title}`}
-          transition:name={`img-${product.slug}`}
+          transition:name={`img-${product.id}`}
           class="w-full h-full object-cover"
         />
       </div>

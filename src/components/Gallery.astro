@@ -27,17 +27,16 @@ const products: CollectionEntry<"productos">[] =
 
   <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
     {
-      // Al tipar el array arriba, 'item' se infiere automáticamente
       products.map((item) => (
         <a
-          href={`/producto/${item.slug}`}
+          href={`/producto/${item.id}`}
           class={`group relative rounded-2xl overflow-hidden shadow-sm border border-agujita-primary/10 block focus:outline-none focus:ring-4 focus:ring-agujita-primary/50 transition-shadow ${item.data.class || ""}`}
           aria-label={`Ver detalles del trabajo: ${item.data.title}`}
         >
           <Image
             src={item.data.image}
             alt={`Fotografía del trabajo: ${item.data.title}`}
-            transition:name={`img-${item.slug}`}
+            transition:name={`img-${item.id}`}
             class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
           />
 
