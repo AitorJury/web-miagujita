@@ -3,8 +3,8 @@ backend:
   repo: AitorJury/web-miagujita
   branch: main
 
-media_folder: "src/assets/img"
-public_folder: "../../assets/img"
+media_folder: "public/img"
+public_folder: "/img"
 
 collections:
   - name: "productos"
