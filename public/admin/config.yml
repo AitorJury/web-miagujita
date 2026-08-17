@@ -1,0 +1,27 @@
+backend:
+  name: github
+  repo: AitorJury/web-miagujita
+  branch: main
+  app_id: Ov23liWrH9QxhnPpHCX4
+  pkce: true
+
+media_folder: "src/assets/img"
+public_folder: "../../assets/img"
+
+collections:
+  - name: "productos"
+    label: "Catálogo de Trabajos"
+    folder: "src/content/productos"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Título del Trabajo", name: "title", widget: "string" }
+      - { label: "Fotografía", name: "image", widget: "image" }
+      - {
+          label: "Clase CSS (Maquetación Asimétrica)",
+          name: "class",
+          widget: "string",
+          required: false,
+          hint: "Opcional. Valores recomendados: 'aspect-square' o 'aspect-[4/3] md:col-span-2'",
+        }
+      - { label: "Descripción", name: "body", widget: "markdown" }
