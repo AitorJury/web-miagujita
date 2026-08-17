@@ -1,5 +1,5 @@
 ---
-import { getCollection } from "astro:content";
+import { getCollection, render } from "astro:content";
 import type { CollectionEntry } from "astro:content";
 import Layout from "../../layouts/Layout.astro";
 import Header from "../../components/Header.astro";
@@ -20,7 +20,7 @@ interface Props {
 }
 
 const { product } = Astro.props;
-const { Content } = await product.render();
+const { Content } = await render(product);
 
 const numeroWhatsApp = "34610854434";
 const mensajeBase = `¡Hola Gladys! Vengo de tu web y me interesa: ${product.data.title}. ¿Me puedes dar más información?`;
