@@ -1,43 +1,33 @@
 ---
-/**
- * @file [id].astro
- * @description Plantilla dinámica para las páginas de detalle de producto.
- *
- * Arquitectura y Generación Estática (SSG):
- * - Uso de `getStaticPaths()`: Instruye al compilador de Astro para que genere una
- * página HTML estática por cada objeto en `products.js` durante el `build`.
- * Esto garantiza un TTFB (Time to First Byte) mínimo y máxima seguridad (no hay base de datos expuesta).
- * - Deep Linking & Conversión: Genera URLs dinámicas para WhatsApp (`urlWhatsApp`),
- * reduciendo la fricción del usuario al pre-rellenar el contexto de la consulta.
- * - View Transitions: Vinculación del atributo `transition:name` con el identificador único
- * del producto para interpolar la imagen desde la galería hasta esta vista de detalle sin cortes.
- */
-
+import { getCollection, render } from "astro:content";
+import type { CollectionEntry } from "astro:content";
 import Layout from "../../layouts/Layout.astro";
 import Header from "../../components/Header.astro";
 import Footer from "../../components/Footer.astro";
-import { products } from "../../data/products.js";
 import { Image } from "astro:assets";
 
-// Función core de Astro para rutas dinámicas
-export function getStaticPaths() {
-  return products.map((product) => ({
-    params: { id: product.id }, // El slug que aparece en la URL (/producto/neceser-personalizado)
-    props: { product }, // Pasamos el objeto completo como propiedad a la vista
+export async function getStaticPaths() {
+  const products = await getCollection("productos");
+  return products.map((product: CollectionEntry<"productos">) => ({
+    params: { id: product.id }, // <--- CAMBIO AQUÍ (slug por id)
+    props: { product },
   }));
 }
 
-// Desestructuración de los datos del producto actual inyectados por getStaticPaths
-const { product } = Astro.props;
+// Creamos la "Interfaz" para que Astro sepa qué tipo de objeto es 'product'
+interface Props {
+  product: CollectionEntry<"productos">;
+}
 
-// Lógica de negocio: Construcción segura de la URL de conversión
+const { product } = Astro.props;
+const { Content } = await render(product);
+
 const numeroWhatsApp = "34610854434";
-const mensajeBase = `¡Hola Gladys! Vengo de tu web y me interesa: ${product.title}. ¿Me puedes dar más información?`;
-// encodeURIComponent es vital para evitar que caracteres especiales (ñ, tildes, espacios) rompan el enlace HTTP
+const mensajeBase = `¡Hola Gladys! Vengo de tu web y me interesa: ${product.data.title}. ¿Me puedes dar más información?`;
 const urlWhatsApp = `https://wa.me/${numeroWhatsApp}?text=${encodeURIComponent(mensajeBase)}`;
 ---
 
-<Layout title={`${product.title} | Mi Agujita`}>
+<Layout title={`${product.data.title} | Mi Agujita`}>
   <Header />
 
   <main class="max-w-7xl mx-auto px-6 py-12 md:py-24 grow">
@@ -56,8 +46,8 @@ const urlWhatsApp = `https://wa.me/${numeroWhatsApp}?text=${encodeURIComponent(m
         class="rounded-3xl overflow-hidden shadow-2xl border border-agujita-primary/10 aspect-4/5"
       >
         <Image
-          src={product.image}
-          alt={`Fotografía detallada del trabajo: ${product.title}`}
+          src={product.data.image}
+          alt={`Fotografía detallada del trabajo: ${product.data.title}`}
           transition:name={`img-${product.id}`}
           class="w-full h-full object-cover"
         />
@@ -73,15 +63,17 @@ const urlWhatsApp = `https://wa.me/${numeroWhatsApp}?text=${encodeURIComponent(m
         <h1
           class="font-serif text-4xl md:text-5xl lg:text-6xl text-agujita-text leading-tight"
         >
-          {product.title}
+          {product.data.title}
         </h1>
 
-        <div class="w-16 h-[2px] bg-agujita-primary/30" aria-hidden="true">
-        </div>
+        <!-- Tailwind fix: h-[2px] actualizado a h-0.5 -->
+        <div class="w-16 h-0.5 bg-agujita-primary/30" aria-hidden="true"></div>
 
-        <p class="font-sans text-lg text-agujita-text/80 leading-relaxed">
-          {product.description}
-        </p>
+        <div
+          class="font-sans text-lg text-agujita-text/80 leading-relaxed space-y-4"
+        >
+          <Content />
+        </div>
 
         <div class="pt-8 flex flex-col sm:flex-row gap-4">
           <a
@@ -89,17 +81,11 @@ const urlWhatsApp = `https://wa.me/${numeroWhatsApp}?text=${encodeURIComponent(m
             target="_blank"
             rel="noopener noreferrer"
             class="px-8 py-4 bg-agujita-text text-white rounded-full font-medium hover:bg-agujita-primary transition-all shadow-lg text-center flex items-center justify-center gap-2 focus:outline-none focus:ring-4 focus:ring-agujita-primary/50"
-            aria-label={`Abrir WhatsApp para preguntar por ${product.title}`}
           >
             <span>Preguntar por este trabajo</span>
             <span class="text-xl" aria-hidden="true">💬</span>
           </a>
         </div>
-
-        <p class="text-sm text-agujita-text/50 italic mt-4">
-          * Al hacer clic se abrirá WhatsApp con un mensaje pre-escrito para
-          facilitarte la consulta.
-        </p>
       </div>
     </article>
   </main>
