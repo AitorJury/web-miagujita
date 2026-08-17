@@ -37,7 +37,8 @@ const products: CollectionEntry<"productos">[] =
             src={item.data.image}
             alt={`Fotografía del trabajo: ${item.data.title}`}
             transition:name={`img-${item.id}`}
-            inferSize={true}
+            width={1920}
+            height={1280}
             class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
           />
 
