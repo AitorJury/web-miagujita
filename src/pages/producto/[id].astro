@@ -4,7 +4,6 @@ import type { CollectionEntry } from "astro:content";
 import Layout from "../../layouts/Layout.astro";
 import Header from "../../components/Header.astro";
 import Footer from "../../components/Footer.astro";
-import { Image } from "astro:assets";
 
 export async function getStaticPaths() {
   const products = await getCollection("productos");
@@ -44,12 +43,12 @@ const urlWhatsApp = `https://wa.me/${numeroWhatsApp}?text=${encodeURIComponent(m
       <div
         class="rounded-3xl overflow-hidden shadow-2xl border border-agujita-primary/10 aspect-4/5"
       >
-        <Image
+        <img
           src={product.data.image}
           alt={`Fotografía detallada del trabajo: ${product.data.title}`}
           transition:name={`img-${product.id}`}
-          width={1920}
-          height={1280}
+          width="1920"
+          height="1280"
           class="w-full h-full object-cover"
         />
       </div>
