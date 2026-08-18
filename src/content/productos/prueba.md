@@ -4,4 +4,4 @@ image: /img/fondo.jpg
 class: ''
 ---
 
-Esto es una prueba.
+Esto se borrará.
